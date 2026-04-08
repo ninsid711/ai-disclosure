@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frontend Module
 
-## Getting Started
+This folder contains the Next.js app used to:
 
-First, run the development server:
+- Upload images to Pinata IPFS.
+- Mark images as AI-generated or original.
+- Submit the disclosure to the blockchain.
+- Verify a CID and preview the image.
+
+For complete project documentation, see `../README.md`.
+
+## Key Files
+
+- `app/page.tsx`: Main UI and upload/verify actions.
+- `utils/pinata.js`: Upload helper (`pinFileToIPFS`).
+- `utils/contract.js`: Ethers contract connection and ABI.
+
+## Setup
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Configure environment in `.env.local`:
+
+```env
+NEXT_PUBLIC_PINATA_API_KEY=your_pinata_api_key
+NEXT_PUBLIC_PINATA_SECRET_KEY=your_pinata_secret_key
+```
+
+3. Set deployed contract address in `utils/contract.js` (`CONTRACT_ADDRESS`).
+
+4. Start dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## User Interaction Flow
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Upload and Disclose
 
-## Learn More
+1. Select an image file.
+2. Choose disclosure flag using `AI Used` checkbox.
+3. Click `Upload + Store`.
+4. Approve MetaMask connection and transaction.
+5. On success, CID is pinned to IPFS and record is stored on-chain.
 
-To learn more about Next.js, take a look at the following resources:
+### Verify
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Paste a CID in `Verify` input.
+2. Click `Verify`.
+3. App fetches latest on-chain record and displays:
+   - AI Used status
+   - Creator address
+   - Image preview from Pinata gateway
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Requirements
 
-## Deploy on Vercel
+- MetaMask installed and connected to local Hardhat network (chain id 31337).
+- Blockchain node running and contract deployed.
+- Contract address in this frontend matches latest deployment.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Important Security Note
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Current upload flow uses browser-exposed Pinata credentials (`NEXT_PUBLIC_*`). This is suitable for local demo but not production.
+
+Production recommendation:
+
+- Move Pinata upload to a secure backend API.
+- Keep secret keys server-side only.
