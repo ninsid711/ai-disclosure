@@ -1,0 +1,137 @@
+/* RESET BROWSER DEFAULTS - FIXES WHITE EDGES */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #050505; /* Matches your app background */
+  min-height: 100vh;
+  width: 100%;
+  color-scheme: dark; /* Tells the browser to use dark scrollbars */
+}
+
+/* Ensure the container also fills the screen */
+.appContainer {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #050505;
+  color: white;
+  padding: 40px 10%;
+  box-sizing: border-box; /* Prevents horizontal scrolling */
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ... keep the rest of your CSS below ... */
+:root {
+  --bg: #050505;
+  --card: #111111;
+  --accent: #0070f3;
+  --accent-glow: rgba(0, 112, 243, 0.15);
+  --text-dim: #888;
+  --border: #222;
+}
+
+.appContainer {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: white;
+  padding: 40px 10%;
+  position: relative;
+  font-family: sans-serif;
+}
+
+.glowEffect {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: var(--accent-glow);
+  filter: blur(120px);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; position: relative; z-index: 1;}
+.logoDot { width: 12px; height: 12px; background: var(--accent); border-radius: 50%; display: inline-block; margin-right: 10px; }
+.eyebrow { text-transform: uppercase; letter-spacing: 1px; font-size: 12px; color: var(--text-dim); }
+.connectionBadge { font-size: 12px; padding: 6px 14px; border-radius: 20px; border: 1px solid #333; color: #555; }
+.connectionBadge.active { border-color: #22c55e; color: #22c55e; }
+
+.hero h1 { font-size: 3.5rem; margin: 0; letter-spacing: -2px; position: relative; z-index: 1;}
+.gradientText { background: linear-gradient(90deg, #0070f3, #00dfd8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero p { color: var(--text-dim); font-size: 1.1rem; max-width: 500px; margin-top: 10px; position: relative; z-index: 1;}
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 50px; position: relative; z-index: 1;}
+.glassCard { background: var(--card); border: 1px solid var(--border); padding: 30px; border-radius: 24px; }
+
+.cardTop { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; }
+.stepNumber { font-size: 11px; font-weight: bold; color: var(--accent); border: 1px solid var(--accent); padding: 2px 6px; border-radius: 4px; }
+
+.dropZone {
+  display: flex;
+  height: 120px;
+  border: 1px dashed #333;
+  border-radius: 16px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.fileStatus { margin: 0; font-size: 14px; }
+.fileSubtext { font-size: 11px; color: var(--text-dim); }
+
+.checkboxRow { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; color: var(--text-dim); font-size: 14px; }
+
+.darkInput {
+  width: 100%;
+  background: #000;
+  border: 1px solid #222;
+  padding: 14px;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.primaryBtn {
+  width: 100%;
+  padding: 14px;
+  background: white;
+  color: black;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+.secondaryBtn {
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  color: white;
+  border-radius: 10px;
+  border: 1px solid #333;
+  cursor: pointer;
+}
+
+.resultsArea { margin-top: 25px; border-top: 1px solid #222; padding-top: 20px; }
+.resultRow { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
+.aiTag { color: #f43f5e; font-weight: bold; }
+.humanTag { color: #0ea5e9; font-weight: bold; }
+.address { font-size: 11px; background: #222; padding: 3px 6px; border-radius: 4px; }
+.resultPreview { width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid #222; }
+
+/* Switch */
+.toggle { position: relative; display: inline-block; width: 34px; height: 18px; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #333; transition: .4s; border-radius: 20px;
+}
+.slider:before {
+  position: absolute; content: ""; height: 12px; width: 12px;
+  left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;
+}
+input:checked + .slider { background-color: var(--accent); }
+input:checked + .slider:before { transform: translateX(16px); }

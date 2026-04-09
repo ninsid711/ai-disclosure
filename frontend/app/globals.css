@@ -1,26 +1,115 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* SECTION CARD */
+.section {
+  background: #161b22;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #30363d;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* TITLE */
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* LABEL */
+.label {
+  font-size: 14px;
+  color: #9ca3af;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* INPUT */
+.input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background: #0e1117;
+  border: 1px solid #30363d;
+  color: white;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: #2563eb;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.btn-secondary {
+  background: #21262d;
+  padding: 12px;
+  border-radius: 8px;
+}
+.btn-secondary:hover {
+  background: #30363d;
+}
+
+/* UPLOAD */
+.upload-box {
+  border: 1px dashed #30363d;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  color: #9ca3af;
+}
+.upload-box:hover {
+  border-color: #2563eb;
+}
+
+/* TOGGLE */
+.toggle {
+  width: 44px;
+  height: 22px;
+  background: #30363d;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  transition: 0.2s;
+}
+.toggle.active {
+  background: #22c55e;
+}
+.toggle .dot {
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+.toggle.active .dot {
+  transform: translateX(20px);
+}
+
+/* BADGE */
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+/* META TEXT */
+.meta {
+  font-size: 12px;
+  color: #9ca3af;
+  word-break: break-all;
+}
+
+/* IMAGE */
+.preview {
+  border-radius: 8px;
+  border: 1px solid #30363d;
+  margin-top: 10px;
+}
+
+/* LINK */
+.link {
+  color: #3b82f6;
+  font-size: 14px;
 }
