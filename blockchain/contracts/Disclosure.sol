@@ -26,7 +26,7 @@ contract Disclosure {
         uint256 timestamp
     );
 
-    // 🔹 Add new disclosure
+    // Add new disclosure
     function addRecord(string memory _hash, bool _aiUsed) public {
         require(bytes(_hash).length > 0, "Empty hash not allowed");
 
@@ -49,7 +49,7 @@ contract Disclosure {
         emit RecordAdded(_hash, _aiUsed, msg.sender, block.timestamp);
     }
 
-    // 🔹 Get latest record for a hash
+    // Get latest record for a hash
     function getLatestRecord(
         string memory _hash
     ) public view returns (Record memory) {
@@ -61,7 +61,7 @@ contract Disclosure {
         return records[latestIndex];
     }
 
-    // 🔹 Get full history of a content hash
+    // Get full history of a content hash
     function getAllRecords(
         string memory _hash
     ) public view returns (Record[] memory) {
@@ -77,7 +77,7 @@ contract Disclosure {
         return result;
     }
 
-    // 🔹 Get total records (for analytics/debugging)
+    // Get total records (for analytics/debugging)
     function getTotalRecords() public view returns (uint256) {
         return records.length;
     }
