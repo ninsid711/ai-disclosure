@@ -70,3 +70,4 @@ await disclosure.getLatestRecord("<cid>");
 
 - Contract artifacts are generated in `artifacts/`.
 - If you redeploy, update the frontend contract address.
+
