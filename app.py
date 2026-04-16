@@ -227,8 +227,8 @@ contract = w3.eth.contract(address=CONTRACT_ADDRESS, abi=ABI)
 # =========================
 # Pinata Config
 # =========================
-PINATA_API_KEY = os.getenv("PINATA_API_KEY")
-PINATA_SECRET_KEY = os.getenv("PINATA_SECRET_KEY")
+PINATA_API_KEY = "3319984fea305e136271"
+PINATA_SECRET_KEY = "6085c3518d4b6015e238b7053fdc7f6caa3bf49d4b530e9ce944b3468d1152f0"
 
 PINATA_URL = "https://api.pinata.cloud/pinning/pinFileToIPFS"
 
@@ -236,6 +236,21 @@ PINATA_URL = "https://api.pinata.cloud/pinning/pinFileToIPFS"
 # UI
 # =========================
 st.title("AI Content Disclosure System")
+
+# =========================
+# USER SELECTION
+# =========================
+st.sidebar.header("Active User")
+
+accounts = w3.eth.accounts
+
+selected_account = st.sidebar.selectbox(
+    "Choose Account",
+    accounts,
+    format_func=lambda x: f"{x[:6]}...{x[-4:]}"
+)
+
+st.sidebar.success(f"Using Wallet:\n{selected_account}")
 
 # =========================
 # Upload Section
@@ -252,40 +267,39 @@ if file:
     file_bytes = file.read()
     hash_val = hashlib.sha256(file_bytes).hexdigest()
 
-    st.write("📌 Content Hash:", hash_val)
+    # st.write("Content Hash:", hash_val)
 
     if st.button("Upload to IPFS + Store on Blockchain"):
-        try:
-            # Upload to Pinata
-            files = {"file": (file.name, file_bytes)}
-            headers = {
-                "pinata_api_key": PINATA_API_KEY,
-                "pinata_secret_api_key": PINATA_SECRET_KEY
-            }
+      try:
+          files = {"file": (file.name, file_bytes)}
+          headers = {
+              "pinata_api_key": PINATA_API_KEY,
+              "pinata_secret_api_key": PINATA_SECRET_KEY
+          }
 
-            response = requests.post(PINATA_URL, files=files, headers=headers)
+          response = requests.post(PINATA_URL, files=files, headers=headers)
 
-            if response.status_code != 200:
-                st.error("❌ Failed to upload to IPFS")
-            else:
-                cid = response.json()["IpfsHash"]
+          if response.status_code != 200:
+              st.error("❌ Failed to upload to IPFS")
+              st.write(response.text)
 
-                st.success(f"Uploaded to IPFS! CID: {cid}")
+          else:
+              cid = response.json()["IpfsHash"]
 
-                # 🔗 Store CID on blockchain
-                tx = contract.functions.addRecord(
-                    cid,   # storing CID instead of hash
-                    ai_flag == "Yes"
-                ).transact({
-                    'from': w3.eth.accounts[0]
-                })
+              st.success(f"Uploaded to IPFS! CID: {cid}")
 
-                st.success("Stored on blockchain!")
-                st.write("Transaction:", tx.hex())
+              tx = contract.functions.addRecord(
+                  cid,
+                  ai_flag == "Yes"
+              ).transact({
+                  'from': selected_account
+              })
 
-        except Exception as e:
-            st.error(f"Error: {str(e)}")
+              st.success("Stored on blockchain!")
+              st.write("Transaction:", tx.hex())
 
+      except Exception as e:
+          st.error(f"Error: {str(e)}")
 # =========================
 # Verify Section
 # =========================
